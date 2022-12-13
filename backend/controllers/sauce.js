@@ -59,11 +59,14 @@ exports.modifySauce = (req, res, next) => { //Selon utilisateur a envoyé un fic
 
     } : {...req.body};// Sinon récupère simplement l'objet dans le corps de la requête
 
+    console.log(req.body);
+    console.log(req.params);
+    
     delete sauceObject._userId; // Supprime UserID venant de la requête (mesure sécurité)
     Sauce.findOne({_id: req.params.id}) // Cherche objet dans BD
         .then((sauce) => {
             if(sauce.userId != req.auth.userId){
-                res.status(401).json({ message: 'Non-autorisé'});
+                res.status(403).json({ message: 'Non-autorisé'});
             } else {
                 Sauce.updateOne({ _id: req.params.id}, {...sauceObject, _id:req.params.id})
                 .then(() => res.status(200).json({message: 'Sauce modifiée !'}))

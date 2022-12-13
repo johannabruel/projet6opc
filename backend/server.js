@@ -1,4 +1,5 @@
 const http = require('http');
+
 const app = require('./app');
 
 // Fonction qui renvoie un port valide qu'il soit fourni sous forme n° ou chaine

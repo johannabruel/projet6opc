@@ -2,6 +2,9 @@ const bcrypt = require('bcrypt'); // Package pour le chiffrement
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
+// Variable d'environnement
+const dotenv = require('dotenv').config();
+
 // Fonction pour enregistrer les nouveaux utilisateurs
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -33,7 +36,7 @@ exports.login = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(
                             {userId: user._id},
-                            'RANDOM_TOKEN_SECRET',
+                            process.env.JWT_SECRET_TOKEN_KEY, // MODIFICATION ICI
                             { expiresIn: '24h'}
                         )
                     });
