@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
         const nameFile = file.originalname.split('.')[0]; // Supprime l'extension originale
         const name = nameFile.split(' ').join('_'); // Puis remplace espace par "_"
         const extension = MIME_TYPES[file.mimetype];
-        callback(null, name + Date.now() + '.' + extension);
+        callback(null, name + '_' + Date.now() + '.' + extension);
     }
 });
 module.exports = multer({ storage: storage}).single('image');

@@ -1,9 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const fs = require('fs');
 
 // Variable d'environnement
 const dotenv = require('dotenv').config();
+
+// Sécurité 
+const helmet = require('helmet'); // Pour sécuriser les headers
+const morgan = require('morgan'); // Pour les logs des requêtes
 
 // Routes
 const saucesRoutes = require('./routes/sauce');
@@ -29,12 +34,18 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS'); // Permet d'envoyer des requetes avec les méthodes mentionnées
     next();
   });
-  
 
+// Pour sécuriser les headers - bloquer tentative utilisation XSS
+app.use(helmet.xssFilter());
+
+// Pour stocker les logs des requêtes dans un fichier "request.log"
+const requestLog = fs.createWriteStream(path.join(__dirname, 'request.log'), { flags: 'a'});
+app.use(morgan('combined', {stream: requestLog}));
+
+// ROUTES
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes); 
 app.use('/images', express.static(path.join(__dirname, 'images'))); // Gestion des images de manière static
-
 
 // Export de l'application
 module.exports = app;
