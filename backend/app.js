@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGODB_CONNECT,
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-app.use(express.json()); // Anciennement BodyParser
+app.use(express.json());
 
 // CORS - Middleware qui permet à l'application d'accéder API
 app.use((req, res, next) => {

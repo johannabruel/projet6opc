@@ -19,14 +19,12 @@ exports.signup = (req, res, next) => {
             .catch(error => res.status(400).json({error}));
     })
     .catch(error => res.status(500).json({ error }));
-    
 };
 
 // Fonction pour connecter des utilisateurs existants
 exports.login = (req, res, next) => {
     // Constante pour rechercher l'email crypté 
     const cryptoSearchEmail = cryptoJs.HmacSHA256(req.body.email, process.env.CRYPTOJS_EMAIL_KEY).toString();
-    
     User.findOne({email: cryptoSearchEmail})
     .then(user => {
         if(!user){
@@ -41,7 +39,7 @@ exports.login = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(
                             {userId: user._id},
-                            process.env.JWT_SECRET_TOKEN_KEY, // MODIFICATION ICI
+                            process.env.JWT_SECRET_TOKEN_KEY, 
                             { expiresIn: '24h'}
                         )
                     });
