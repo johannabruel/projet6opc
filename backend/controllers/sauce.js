@@ -9,7 +9,7 @@ exports.createSauce = (req, res, next) => {
     
     const sauce = new Sauce ({ //Création objet 
         ...sauceObject,
-        userId: req.auth.userId, // Extrait le userID de la requête grace multer
+        userId: req.auth.userId, // Extrait le userID de la requête
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     sauce.likes = 0;
@@ -100,7 +100,6 @@ exports.modifySauce = (req, res, next) => {
 // Fonction pour liker ou disliker 
 exports.likeSauce = (req, res, next) => {
     const like = req.body.like;
-
     // Si clic sur bouton like 
     if (like === 1){
         Sauce.updateOne(

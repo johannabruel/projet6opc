@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); // Importe le routeur
 
 const sauceCtrl = require('../controllers/sauce');
 const auth = require('../middleware/auth');

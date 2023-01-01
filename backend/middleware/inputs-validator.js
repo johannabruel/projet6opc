@@ -1,7 +1,7 @@
 // Pour valider les données saisies par les utilisateurs
 const Joi = require('joi'); 
 
-// Validation des données lors de l'inscription et de la connexion de l'utilisateur
+// Validation des données lors de l'inscription de l'utilisateur
 const userSchema = Joi.object({
     email: Joi.string()
         .trim()
